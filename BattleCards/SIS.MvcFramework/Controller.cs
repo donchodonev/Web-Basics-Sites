@@ -48,7 +48,17 @@ namespace SIS.MvcFramework
             var html = File.ReadAllText(viewPath);
             html = viewEngine.GetHtml(html, viewModel, this.User);
 
-            var layout = File.ReadAllText("Views/Shared/_Layout.cshtml");
+            string layout;
+
+            if (this.IsUserLoggedIn())
+            {
+                layout = File.ReadAllText("Views/Shared/_LoggedInLayout.cshtml");
+            }
+            else
+            {
+                layout = File.ReadAllText("Views/Shared/_Layout.cshtml");
+            }
+
             var bodyWithLayout = layout.Replace("@RenderBody()", html);
             bodyWithLayout = viewEngine.GetHtml(bodyWithLayout, viewModel, this.User);
             return new HtmlResponse(bodyWithLayout);

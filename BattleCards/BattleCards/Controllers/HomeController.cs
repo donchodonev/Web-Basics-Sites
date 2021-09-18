@@ -8,7 +8,14 @@
         [HttpGet("/")]
         public HttpResponse Index()
         {
-            return this.View();
+            if (this.IsUserLoggedIn())
+            {
+                return this.View("LoggedInIndex");
+            }
+            else
+            {
+                return this.View();
+            }
         }
     }
 }
