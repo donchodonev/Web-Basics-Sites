@@ -9,7 +9,7 @@ namespace BattleCards.Models
     {
         public Card()
         {
-            Users = new HashSet<UserCard>();
+            CardUsers = new HashSet<UserCard>();
         }
 
         [Required]
@@ -35,8 +35,6 @@ namespace BattleCards.Models
         [Required]
         public string Description { get; set; }
 
-        public string UserId { get; set; }
-
-        public ICollection<UserCard> Users { get; set; }
+        public ICollection<UserCard> CardUsers { get; set; }
     }
 }

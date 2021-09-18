@@ -8,8 +8,8 @@ namespace BattleCards.Models
     {
         public User()
         {
-            Id = new Guid().ToString();
-            Cards = new HashSet<UserCard>();
+            Id = Guid.NewGuid().ToString();
+            UserCards = new HashSet<UserCard>();
         }
 
         [Required]
@@ -25,8 +25,6 @@ namespace BattleCards.Models
         [Required]
         public string Password { get; set; }
 
-        public int CardId { get; set; }
-
-        public ICollection<UserCard> Cards { get; set; }
+        public ICollection<UserCard> UserCards { get; set; }
     }
 }

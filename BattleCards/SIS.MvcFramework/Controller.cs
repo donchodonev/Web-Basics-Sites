@@ -29,7 +29,7 @@ namespace SIS.MvcFramework
 
         protected HttpResponse Error(string error)
         {
-            return this.ViewByName<ErrorViewModel>("Views/Shared/Error.html", new ErrorViewModel { Error = error });
+            return this.ViewByName<ErrorViewModel>("Views/Shared/Error.cshtml", new ErrorViewModel { Error = error });
         }
 
         protected HttpResponse Redirect(string url)
