@@ -9,6 +9,8 @@
             base.OnConfiguring(optionsBuilder);
 
             optionsBuilder.UseSqlServer(DatabaseConfiguration.ConnectionString);
+
+            this.Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
