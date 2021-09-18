@@ -26,10 +26,10 @@ namespace BattleCards.Models
         public string Keyword { get; set; }
 
         [Required]
-        public uint Attack { get; set; }
+        public int Attack { get; set; }
 
         [Required]
-        public uint Health { get; set; }
+        public int Health { get; set; }
 
         [MaxLength(200)]
         [Required]

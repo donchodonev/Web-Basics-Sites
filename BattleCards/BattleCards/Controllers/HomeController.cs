@@ -10,7 +10,7 @@
         {
             if (this.IsUserLoggedIn())
             {
-                return this.View("LoggedInIndex");
+                return this.Redirect("/Cards/All");
             }
             else
             {
