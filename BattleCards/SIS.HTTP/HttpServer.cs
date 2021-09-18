@@ -89,7 +89,7 @@
 
                 var route = this.routeTable.FirstOrDefault(
                     x => x.HttpMethod == request.Method && string.Compare(x.Path, request.Path, true) == 0);
-                HttpResponse response;
+                HttpResponse response = new HttpResponse();
                 if (route == null)
                 {
                     response = new HttpResponse(HttpResponseCode.NotFound, new byte[0]);

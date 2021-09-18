@@ -16,6 +16,6 @@ namespace BattleCards.Services
 
         public string GetPassword(string username);
 
-        public string GetId(string username);
+        public string GetId(string username, string password);
     }
 }

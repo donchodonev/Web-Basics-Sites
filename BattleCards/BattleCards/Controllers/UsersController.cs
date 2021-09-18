@@ -23,12 +23,24 @@ namespace BattleCards.Controllers
         }
         public HttpResponse Login()
         {
+            if (this.IsUserLoggedIn())
+            {
+                return this.Redirect("/Cards/All");
+            }
+
             return this.View();
         }
 
         [HttpPost]
         public HttpResponse Login(string username, string password)
         {
+            var userId = userService.GetId(username, password);
+
+            if (this.IsUserLoggedIn())
+            {
+                return this.Redirect("/Cards/All");
+            }
+
             if (username.Length < UsernameMinLength || username.Length > UsernameMaxLength || string.IsNullOrEmpty(username) || string.IsNullOrWhiteSpace(username))
             {
                 return this.Error($"Username length must be between {UsernameMinLength} and {UsernameMaxLength} characters long");
@@ -39,13 +51,21 @@ namespace BattleCards.Controllers
                 return this.Error($"Password length must be between {PasswordMinLength} and {PasswordMaxLength} characters long");
             }
 
+            if (!userService.UsernameExists(username))
+            {
+                return this.Error($"A user with the username {username} does not exist, please try again .");
+            }
 
+            var userPassword = userService.GetPassword(username);
 
-
-
-
-
-
+            if (userPassword == userService.GetPasswordHash(password))
+            {
+                this.SignIn(userService.GetId(username,password));
+            }
+            else
+            {
+                return Error("Invalid username or password.");
+            }
 
             return this.Redirect("/Cards/All");
         }

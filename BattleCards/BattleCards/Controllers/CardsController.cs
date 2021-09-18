@@ -17,5 +17,10 @@ namespace BattleCards.Controllers
         {
             return this.View();
         }
+
+        public HttpResponse All()
+        {
+            return this.View();
+        }
     }
 }

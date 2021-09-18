@@ -21,9 +21,9 @@ namespace BattleCards.Services
             return database.Users.Any(x => x.Email == email);
         }
 
-        public string GetId(string username)
+        public string GetId(string username, string password)
         {
-            return database.Users.FirstOrDefault(x => x.Username == username).Id;
+            return database.Users.FirstOrDefault(x => x.Username == username && x.Password == GetPasswordHash(password))?.Id;
         }
 
         public string GetPassword(string username)

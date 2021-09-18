@@ -98,10 +98,9 @@
                 cookieBuilder.Append($"; Path=" + this.Path);
             }
 
-            if (this.Secure)
-            {
-                cookieBuilder.Append("; Secure");
-            }
+
+            cookieBuilder.Append("; Secure");
+
 
             if (this.HttpOnly)
             {
