@@ -1,21 +1,26 @@
 ﻿namespace BattleCards.Data
 {
+    using BattleCards.Models;
     using Microsoft.EntityFrameworkCore;
 
     public class ApplicationDbContext : DbContext
-    { 
+    {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
             optionsBuilder.UseSqlServer(DatabaseConfiguration.ConnectionString);
-
-            this.Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder
+                .Entity<UserCard>()
+                .HasKey(x => new {x.UserId, x.CardId});
         }
+
+        public DbSet<Card> Cards {get;set;}
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserCard> UserCards { get; set; }
     }
 }
