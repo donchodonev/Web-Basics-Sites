@@ -102,18 +102,18 @@ namespace BattleCards.Controllers
             return Redirect("/Cards/All");
         }
 
-        public HttpResponse RemoveFromoCollection(int cardId)
+        public HttpResponse RemoveFromCollection(int cardId)
         {
             var userId = this.Request.SessionData["UserId"];
 
-            if (cardsService.UserOwnsCard(cardId, userId))
+            if (!cardsService.UserOwnsCard(cardId, userId))
             {
-                return Error("User already owns this card");
+                return Error($"User doesn't own {cardsService.GetCard(cardId).Name}");
             }
 
-            cardsService.AddCardToUserCollection(cardId, userId);
+            cardsService.RemoveUserCard(cardId, userId);
 
-            return Redirect("/Cards/All");
+            return Redirect("/Cards/Collection");
         }
     }
 }

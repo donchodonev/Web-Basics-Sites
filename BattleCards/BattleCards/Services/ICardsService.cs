@@ -16,5 +16,9 @@ namespace BattleCards.Services
         public bool UserOwnsCard(int cardId, string userId);
 
         public IEnumerable<Card> GetAllUserCards(string userId);
+
+        public void RemoveUserCard(int cardId, string userId);
+
+        public Card GetCard(int cardId);
     }
 }

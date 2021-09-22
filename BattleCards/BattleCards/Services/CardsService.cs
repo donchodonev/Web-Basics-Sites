@@ -58,5 +58,25 @@ namespace BattleCards.Services
         {
             return db.Cards.Where(x => x.CardUsers.Any(y => y.UserId == userId));
         }
+
+        public void RemoveUserCard(int cardId, string userId)
+        {
+            var userCard = new UserCard()
+            {
+                CardId = cardId,
+                UserId = userId,
+                User = db.Users.First(x => x.Id == userId),
+                Card = db.Cards.First(x => x.Id == cardId)
+            };
+
+            db.UserCards.Remove(userCard);
+
+            db.SaveChanges();
+        }
+
+        public Card GetCard(int cardId)
+        {
+            return db.Cards.FirstOrDefault(x => x.Id == cardId);
+        }
     }
 }
