@@ -1,4 +1,5 @@
-﻿using BattleCards.Models;
+﻿using BattleCards.Data;
+using BattleCards.Models;
 using BattleCards.Services;
 using BattleCards.ViewModels.Cards;
 using SIS.HTTP;
@@ -64,6 +65,11 @@ namespace BattleCards.Controllers
 
         public HttpResponse Collection()
         {
+            if (!IsUserLoggedIn())
+            {
+                return this.Error("In order to view your card collection please first log-in");
+            }
+
             return this.View();
         }
 
@@ -74,6 +80,20 @@ namespace BattleCards.Controllers
             cards.Cards = cardsService.GetAllCards().ToList();
 
             return this.View(cards);
+        }
+
+        public HttpResponse AddToCollection(int cardId)
+        {
+            var userId = this.Request.SessionData["UserId"];
+
+            if (cardsService.UserOwnsCard(cardId, userId))
+            {
+                return Error("User already owns this card");
+            }
+
+            cardsService.AddCardToUserCollection(cardId, userId);
+
+            return Redirect("/Cards/All");
         }
     }
 }

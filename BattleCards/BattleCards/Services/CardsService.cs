@@ -31,14 +31,27 @@ namespace BattleCards.Services
             db.SaveChanges();
         }
 
+        public void AddCardToUserCollection(int cardId, string userId)
+        {
+            db.UserCards.Add(new UserCard()
+            {
+                UserId = userId,
+                CardId = cardId,
+                User = db.Users.First(x => x.Id == userId),
+                Card = db.Cards.First(x => x.Id == cardId)
+            });
+
+            db.SaveChanges();
+        }
+
         public IEnumerable<Card> GetAllCards()
         {
             return db.Cards;
         }
 
-        public Card GetCardByUserId(string userId)
+        public bool UserOwnsCard(int cardId, string userId)
         {
-            throw new NotImplementedException();
+            return db.UserCards.Any(x => x.UserId == userId && x.CardId == cardId);
         }
     }
 }

@@ -35,6 +35,6 @@ namespace BattleCards.Models
         [Required]
         public string Description { get; set; }
 
-        public ICollection<UserCard> CardUsers { get; set; }
+        public virtual ICollection<UserCard> CardUsers { get; set; }
     }
 }

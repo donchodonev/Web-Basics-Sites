@@ -9,8 +9,10 @@ namespace BattleCards.Services
     {
         public void AddCard(string name, string imageUrl, string keyword, int attack, int health, string description);
 
-        public Card GetCardByUserId(string userId);
-
         public IEnumerable<Card> GetAllCards();
+
+        public void AddCardToUserCollection(int cardId, string userId);
+
+        public bool UserOwnsCard(int cardId, string userId);
     }
 }

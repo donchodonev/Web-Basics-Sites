@@ -25,6 +25,6 @@ namespace BattleCards.Models
         [Required]
         public string Password { get; set; }
 
-        public ICollection<UserCard> UserCards { get; set; }
+        public virtual ICollection<UserCard> UserCards { get; set; }
     }
 }
