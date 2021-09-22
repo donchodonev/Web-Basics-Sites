@@ -70,7 +70,13 @@ namespace BattleCards.Controllers
                 return this.Error("In order to view your card collection please first log-in");
             }
 
-            return this.View();
+            var userId = this.Request.SessionData["UserId"];
+
+            AllCardsViewModel userCards = new AllCardsViewModel();
+
+            userCards.Cards = cardsService.GetAllUserCards(userId).ToList();
+
+            return this.View(userCards);
         }
 
         public HttpResponse All()
@@ -83,6 +89,20 @@ namespace BattleCards.Controllers
         }
 
         public HttpResponse AddToCollection(int cardId)
+        {
+            var userId = this.Request.SessionData["UserId"];
+
+            if (cardsService.UserOwnsCard(cardId, userId))
+            {
+                return Error("User already owns this card");
+            }
+
+            cardsService.AddCardToUserCollection(cardId, userId);
+
+            return Redirect("/Cards/All");
+        }
+
+        public HttpResponse RemoveFromoCollection(int cardId)
         {
             var userId = this.Request.SessionData["UserId"];
 

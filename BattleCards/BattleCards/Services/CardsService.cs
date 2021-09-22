@@ -53,5 +53,10 @@ namespace BattleCards.Services
         {
             return db.UserCards.Any(x => x.UserId == userId && x.CardId == cardId);
         }
+
+        public IEnumerable<Card> GetAllUserCards(string userId)
+        {
+            return db.Cards.Where(x => x.CardUsers.Any(y => y.UserId == userId));
+        }
     }
 }
