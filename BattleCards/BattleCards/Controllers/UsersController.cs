@@ -31,9 +31,22 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
+        [HttpGet("/Logout")]
+        public HttpResponse Logout()
+        {
+            this.SignOut();
+
+            return Redirect("/Users/Login");
+        }
+
         [HttpPost]
         public HttpResponse Login(string username, string password)
         {
+            if (this.IsUserLoggedIn())
+            {
+                return this.Redirect("/Cards/All");
+            }
+
             var userId = userService.GetId(username, password);
 
             if (this.IsUserLoggedIn())
@@ -78,6 +91,11 @@ namespace BattleCards.Controllers
         [HttpPost()]
         public HttpResponse Register(string username, string email, string password, string confirmPassword, Random randomNum)
         {
+            if (this.IsUserLoggedIn())
+            {
+                return this.Redirect("/Cards/All");
+            }
+
             if (username.Length < UsernameMinLength || username.Length > UsernameMaxLength || string.IsNullOrEmpty(username) || string.IsNullOrWhiteSpace(username))
             {
                 return this.Error($"Username length must be between {UsernameMinLength} and {UsernameMaxLength} characters long");

@@ -22,6 +22,11 @@ namespace BattleCards.Controllers
 
         public HttpResponse Add()
         {
+            if (!IsUserLoggedIn())
+            {
+                return Redirect("/Users/Login");
+            }
+
             return this.View();
         }
 
@@ -81,6 +86,11 @@ namespace BattleCards.Controllers
 
         public HttpResponse All()
         {
+            if (!IsUserLoggedIn())
+            {
+                return Redirect("/Users/Login");
+            }
+
             AllCardsViewModel cards = new AllCardsViewModel();
 
             cards.Cards = cardsService.GetAllCards().ToList();
@@ -90,11 +100,16 @@ namespace BattleCards.Controllers
 
         public HttpResponse AddToCollection(int cardId)
         {
+            if (!IsUserLoggedIn())
+            {
+                return Redirect("/Users/Login");
+            }
+
             var userId = this.Request.SessionData["UserId"];
 
             if (cardsService.UserOwnsCard(cardId, userId))
             {
-                return Error("User already owns this card");
+                return Redirect("/Cards/All");
             }
 
             cardsService.AddCardToUserCollection(cardId, userId);
@@ -104,6 +119,11 @@ namespace BattleCards.Controllers
 
         public HttpResponse RemoveFromCollection(int cardId)
         {
+            if (!IsUserLoggedIn())
+            {
+                return Redirect("/Users/Login");
+            }
+
             var userId = this.Request.SessionData["UserId"];
 
             if (!cardsService.UserOwnsCard(cardId, userId))
